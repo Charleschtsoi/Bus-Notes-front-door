@@ -6,11 +6,14 @@ import { snapshotRoutes } from "./kmb.js";
 import { listDevices, pushImage } from "./push.js";
 import { pickBest } from "./rank.js";
 import { renderPng, renderTextFallback } from "./render.js";
-import { activeDaySet, routeActiveToday, type BoardModel } from "./types.js";
-import { fetchWeather } from "./weather.js";
+import {
+  resolveBoardMode,
+  type BoardMode,
+  type BoardModel,
+} from "./types.js";
+import { fetchWeatherBundle } from "./weather.js";
 
 function nowHkt(): Date {
-  // Node typically uses system TZ; force HKT wall-clock via formatter.
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone: "Asia/Hong_Kong",
     year: "numeric",
@@ -27,18 +30,48 @@ function nowHkt(): Date {
   );
 }
 
+function forceModeFromArgs(): BoardMode | null {
+  if (process.argv.includes("--force-evening")) return "weekday-evening";
+  if (process.argv.includes("--force-weekend-evening")) return "weekend-evening";
+  if (process.argv.includes("--force-bus")) return "weekday-bus";
+  if (process.argv.includes("--force-weekend")) return "weekend-bus";
+  return null;
+}
+
 async function buildBoard(): Promise<BoardModel> {
   const now = nowHkt();
-  const daySet = activeDaySet(now);
-  const watches = ROUTES.filter((r) => routeActiveToday(r, now));
-  const [routes, weather] = await Promise.all([
-    snapshotRoutes(watches, now),
-    fetchWeather(),
-  ]);
+  const mode = forceModeFromArgs() ?? resolveBoardMode(now);
+  const daySet =
+    mode.startsWith("weekend") ? ("weekend" as const) : ("weekday" as const);
+
+  const weatherBundle = await fetchWeatherBundle();
+
+  if (mode === "weekday-evening" || mode === "weekend-evening") {
+    return {
+      mode,
+      now,
+      daySet,
+      weather: weatherBundle.current,
+      evening: weatherBundle.evening,
+      routes: [],
+      pick: null,
+    };
+  }
+
+  const watches = ROUTES.filter((r) => {
+    if (mode === "weekend-bus") {
+      return r.days === "weekend" || r.days === "everyday";
+    }
+    return r.days === "weekday" || r.days === "everyday";
+  });
+
+  const routes = await snapshotRoutes(watches, now);
   return {
+    mode,
     now,
     daySet,
-    weather,
+    weather: weatherBundle.current,
+    evening: weatherBundle.evening,
     routes,
     pick: pickBest(routes),
   };
@@ -56,6 +89,7 @@ async function main() {
   }
 
   const model = await buildBoard();
+  console.log(`mode=${model.mode}`);
   console.log(renderTextFallback(model));
 
   const outDir = path.resolve("output");

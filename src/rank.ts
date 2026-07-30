@@ -1,14 +1,8 @@
 import type { RouteSnapshot } from "./types.js";
 
-/**
- * Pick the bus you can still catch with the shortest leave-in time.
- * Skip arrivals you'd already miss (leaveIn would be negative — we clamp
- * those out by requiring leaveIn !== null and arrival after walk).
- */
 export function pickBest(routes: RouteSnapshot[]): RouteSnapshot | null {
   const catchable = routes.filter((r) => {
     if (r.leaveIn === null || r.arrivals.length === 0) return false;
-    // Must still be able to walk there before the bus
     return r.arrivals[0].minutes >= r.stop.walkMin;
   });
 
@@ -24,16 +18,25 @@ export function pickBest(routes: RouteSnapshot[]): RouteSnapshot | null {
   return catchable[0];
 }
 
-export function formatLeave(minutes: number | null): string {
-  if (minutes === null) return "—";
-  if (minutes <= 0) return "NOW";
-  return `${minutes}′`;
+/** 候車站：固定三字 */
+export function formatStop(name: string): string {
+  if (name.includes("青富")) return "青富苑";
+  if (name.includes("青桃")) return "青桃樓";
+  return name.slice(0, 3);
 }
 
-export function formatEtaList(r: RouteSnapshot, max = 2): string {
-  if (r.arrivals.length === 0) return "—";
-  return r.arrivals
-    .slice(0, max)
-    .map((a) => `${a.minutes}′`)
-    .join(" · ");
+export type EtaDisplay = {
+  primary: string;
+  secondary: string | null;
+};
+
+/** 到站：大字主班 + 細字下一班 */
+export function formatEtaParts(r: RouteSnapshot): EtaDisplay {
+  if (r.arrivals.length === 0) {
+    return { primary: "—", secondary: null };
+  }
+  const primary = `${r.arrivals[0].minutes}`;
+  const secondary =
+    r.arrivals.length > 1 ? `${r.arrivals[1].minutes}` : null;
+  return { primary, secondary };
 }

@@ -90,33 +90,31 @@ export const ROUTES: RouteWatch[] = [
     destLabel: "天后",
   },
 
-  // —— Weekend ——
+  // —— Weekend leave-home (display order: X42C → 42A → 249X → 49M) ——
   {
     route: "X42C",
     bound: "O",
     serviceType: "1",
-    // Some early trips skip 青富苑 → fall back to 青桃樓
+    // ≥10:00 trips stop at 青富苑; earlier → 青桃樓 fallback
     stops: [CF("07F45B3B36DFDDAE"), CT("B085DDE8E381E370")],
     days: "weekend",
     destLabel: "油塘",
   },
   {
-    route: "249X",
-    bound: "I",
-    serviceType: "1",
-    // No 青富苑 toward 博康 → 青桃樓
-    stops: [CT("CA60760D2303E6D0")],
-    days: "weekend",
-    destLabel: "博康",
-  },
-  {
     route: "42A",
     bound: "O",
     serviceType: "1",
-    // No 青富苑 → 青桃樓
     stops: [CT("B085DDE8E381E370")],
     days: "weekend",
     destLabel: "西九龍",
+  },
+  {
+    route: "249X",
+    bound: "I",
+    serviceType: "1",
+    stops: [CT("CA60760D2303E6D0")],
+    days: "weekend",
+    destLabel: "博康",
   },
 ];
 
