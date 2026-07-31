@@ -56,20 +56,12 @@ export function activeDaySet(now: Date): DaySet {
 }
 
 /**
- * 平日 06:00–19:00 → 平日巴士
- * 平日 19:01–05:59 → 平日晚間天氣
- * 週末 06:00–19:00 → 假日巴士（X42C / 42A / 249X / 49M）
- * 週末 19:01–05:59 → 假日晚間天氣
+ * Always show bus info (device only updates when Mac pushes).
+ * 平日 → 平日巴士；週末 → 假日巴士。
+ * Evening weather boards remain available via --force-evening flags only.
  */
 export function resolveBoardMode(now: Date): BoardMode {
-  const mins = now.getHours() * 60 + now.getMinutes();
-  const dayPart =
-    mins >= 6 * 60 && mins <= 19 * 60 ? "day" : "evening";
-
-  if (isWeekend(now)) {
-    return dayPart === "day" ? "weekend-bus" : "weekend-evening";
-  }
-  return dayPart === "day" ? "weekday-bus" : "weekday-evening";
+  return isWeekend(now) ? "weekend-bus" : "weekday-bus";
 }
 
 export function routeActiveToday(watch: RouteWatch, now: Date): boolean {

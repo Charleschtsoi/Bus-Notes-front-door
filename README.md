@@ -56,10 +56,12 @@ Example local cron:
 
 ## Schedule
 
-| Time (HKT) | Weekday | Weekend |
-|---|---|---|
-| **06:00–19:00** | Bus: 49M / A32 / 948B / 948A / 948 | Bus: **X42C / 42A / 249X / 49M** |
-| **19:01–05:59** | Evening commute weather | Evening weather (same UI) |
+Bus info stays on **all day** (Note 4 only changes when this Mac script pushes).
+
+| Day | Routes |
+|---|---|
+| **Weekday** | 49M / A32 / 948B / 948A / 948 |
+| **Weekend** | X42C / 42A / 249X / 49M |
 
 Weekend notes:
 - **X42C**: Sat/Sun roughly 09:15–17:45 outbound; trips before ~10:00 may skip 青富苑 → board falls back to 青桃樓
@@ -67,13 +69,11 @@ Weekend notes:
 - **249X**: 青桃樓 → 博康（沙田）
 - **49M**: 青富苑 → 青衣站
 
-Force a mode for testing:
+Optional weather board (manual only):
 
 ```bash
 npm start -- --force-evening
-npm start -- --force-bus
 npm start -- --force-weekend
-npm start -- --force-weekend-evening
 ```
 
 
