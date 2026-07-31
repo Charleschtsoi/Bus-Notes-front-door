@@ -1,8 +1,32 @@
-# Zectrix Frontdoor Bus (Path A)
+# Zectrix Frontdoor Bus
 
-Glanceable bus board for **Zectrix Note 4**, pushed via the official cloud API. Keeps stock AI firmware.
+Two paths:
+
+- **Path A** (stock firmware): Mac pushes a PNG via Zectrix cloud — see scripts below.
+- **Path B** (recommended): Flash **TransitInk OS** so Note 4 pulls KMB itself — see [`path-b/PATH_B.md`](path-b/PATH_B.md).
 
 Home: **青富苑**. Stop preference: **青富苑 → 長青邨青桃樓**.
+
+## Path B (on-device)
+
+```bash
+./path-b/scripts/backup-stock.sh      # mandatory first
+./path-b/scripts/flash-transitink.sh  # after backup
+```
+
+Then follow [`path-b/WIDGET_SETUP.md`](path-b/WIDGET_SETUP.md).  
+Pre-built portal JSON (Wi-Fi placeholders + awake 06:00–09:30 + all routes):  
+[`path-b/config/ching-fu-frontdoor.json`](path-b/config/ching-fu-frontdoor.json)
+
+Restore stock:
+
+```bash
+./path-b/scripts/restore-stock.sh path-b/backups/zectrix-note4-stock-TIMESTAMP.bin
+```
+
+## Path A (Mac push — fallback)
+
+Glanceable bus board pushed via Zectrix Open API.
 
 ## What it shows
 

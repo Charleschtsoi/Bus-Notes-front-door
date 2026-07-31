@@ -1,0 +1,125 @@
+{
+  "schema_version": 3,
+  "ui_locale": "zh_hk",
+  "display_font": "noto_sans",
+  "time_zone": "asia_hong_kong",
+  "wifi_ssid": "REPLACE_HOME_WIFI_SSID",
+  "wifi_password": "REPLACE_HOME_WIFI_PASSWORD",
+  "weather_location_tc": "青衣",
+  "sleep_enabled": true,
+  "wake_duration_minutes": 15,
+  "sleep_maintenance_hours": 12,
+  "scheduled_wake_enabled": true,
+  "scheduled_wake_start_minutes": 360,
+  "scheduled_wake_end_minutes": 570,
+  "widgets": [
+    {
+      "type": "bus_eta",
+      "bus": {
+        "operator": "kmb",
+        "route_id": "49M",
+        "direction_id": "outbound",
+        "service_type": "1",
+        "stop_id": "333E9F98EEB84849",
+        "route_label_tc": "49M",
+        "stop_label_tc": "青富苑",
+        "destination_label_tc": "青衣站"
+      }
+    },
+    {
+      "type": "bus_eta",
+      "bus": {
+        "operator": "lwb",
+        "route_id": "A32",
+        "direction_id": "outbound",
+        "service_type": "1",
+        "stop_id": "3D42EBD6AC55A845",
+        "route_label_tc": "A32",
+        "stop_label_tc": "長青邨青桃樓",
+        "destination_label_tc": "機場"
+      }
+    },
+    {
+      "type": "bus_eta",
+      "bus": {
+        "operator": "kmb",
+        "route_id": "948B",
+        "direction_id": "outbound",
+        "service_type": "1",
+        "stop_id": "07F45B3B36DFDDAE",
+        "route_label_tc": "948B",
+        "stop_label_tc": "青富苑",
+        "destination_label_tc": "天后"
+      }
+    },
+    {
+      "type": "bus_eta",
+      "bus": {
+        "operator": "kmb",
+        "route_id": "948A",
+        "direction_id": "outbound",
+        "service_type": "1",
+        "stop_id": "CA60760D2303E6D0",
+        "route_label_tc": "948A",
+        "stop_label_tc": "長青邨青桃樓",
+        "destination_label_tc": "天后"
+      }
+    },
+    {
+      "type": "bus_eta",
+      "bus": {
+        "operator": "kmb",
+        "route_id": "948",
+        "direction_id": "outbound",
+        "service_type": "1",
+        "stop_id": "CA60760D2303E6D0",
+        "route_label_tc": "948",
+        "stop_label_tc": "長青邨青桃樓",
+        "destination_label_tc": "天后"
+      }
+    },
+    {
+      "type": "bus_eta",
+      "bus": {
+        "operator": "kmb",
+        "route_id": "X42C",
+        "direction_id": "outbound",
+        "service_type": "1",
+        "stop_id": "07F45B3B36DFDDAE",
+        "route_label_tc": "X42C",
+        "stop_label_tc": "青富苑",
+        "destination_label_tc": "油塘"
+      }
+    },
+    {
+      "type": "bus_eta",
+      "bus": {
+        "operator": "kmb",
+        "route_id": "42A",
+        "direction_id": "outbound",
+        "service_type": "1",
+        "stop_id": "B085DDE8E381E370",
+        "route_label_tc": "42A",
+        "stop_label_tc": "長青邨青桃樓",
+        "destination_label_tc": "西九龍"
+      }
+    },
+    {
+      "type": "bus_eta",
+      "bus": {
+        "operator": "kmb",
+        "route_id": "249X",
+        "direction_id": "inbound",
+        "service_type": "1",
+        "stop_id": "CA60760D2303E6D0",
+        "route_label_tc": "249X",
+        "stop_label_tc": "長青邨青桃樓",
+        "destination_label_tc": "博康"
+      }
+    },
+    { "type": "disabled" },
+    { "type": "disabled" },
+    { "type": "disabled" },
+    { "type": "disabled" }
+  ]
+}

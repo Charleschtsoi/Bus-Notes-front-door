@@ -5,3 +5,7 @@ logs/
 .env
 *.log
 .DS_Store
+path-b/backups/
+path-b/firmware/
+path-b/transitink-os/
+path-b/config/ching-fu-frontdoor.local.json
