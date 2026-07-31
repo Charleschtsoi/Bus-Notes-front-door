@@ -43,16 +43,29 @@ npm run render-once
 npm start
 ```
 
-## Cron (awake windows)
+## How refresh works
 
-Suggested HKT refresh: every 1–2 min during `07:00–09:30` and `17:30–20:30`.
+Two separate steps:
 
-Example local cron:
+1. **Mac script** fetches KMB ETA + weather, renders PNG, pushes to Zectrix cloud (`npm start`).
+2. **Note 4** wakes on its **同步周期** and downloads the latest image page.
 
-```cron
-*/2 7-9 * * * cd /path/to/Zectrix && /usr/bin/npm start >> /tmp/frontdoor-bus.log 2>&1
-*/2 17-20 * * * cd /path/to/Zectrix && /usr/bin/npm start >> /tmp/frontdoor-bus.log 2>&1
+If the Mac does not push, the screen stays stale. If the device sync interval is long, it may lag even after a push until the next wake (or you press the front button).
+
+### Auto refresh 06:00–09:00 (macOS LaunchAgent)
+
+Already installable:
+
+```bash
+./scripts/install-refresh.sh
 ```
+
+- LaunchAgent checks every **60 seconds**
+- Pushes only during **06:00–09:00 HKT**
+- Logs: `~/Library/Logs/ZectrixFrontdoorBus/refresh.log`
+- Mac must be **awake** (lid open / not sleeping), or use “Prevent automatic sleeping when display is off” while charging
+
+**Device side (required):** on Note 4 settings, set **同步周期** to **1 minute** during commute testing. Cloud push alone does not wake a sleeping Note 4 until the next sync cycle (or you press the front button).
 
 ## Schedule
 
